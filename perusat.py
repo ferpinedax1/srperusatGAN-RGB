@@ -66,7 +66,7 @@ class ImageDataset(Dataset):
         self.hr_transform = transforms.Compose([
                             #transforms.Lambda(lambda x: my_transform_512(x)),
                             #transforms.Lambda(lambda x: my_transform_nor(x)),
-                            transforms.Lambda(lambda x: my_transform_go(x)),
+                            #transforms.Lambda(lambda x: my_transform_go(x)),
                             transforms.Lambda(lambda x: my_transform_tensor(x))
                             ])
 
