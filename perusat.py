@@ -59,14 +59,14 @@ class ImageDataset(Dataset):
         self.lr_transform = transforms.Compose([
                             transforms.Lambda(lambda x: my_transform_128(x)),
                             #transforms.Lambda(lambda x: my_transform_nor(x)),
-                            #transforms.Lambda(lambda x: my_transform_go(x)),
+                            transforms.Lambda(lambda x: my_transform_go(x)),
                             transforms.Lambda(lambda x: my_transform_tensor(x))
                             ])
         #Transformacion para obtener una imagen en HR 512x512 - interpolación
         self.hr_transform = transforms.Compose([
                             transforms.Lambda(lambda x: my_transform_512(x)),
                             #transforms.Lambda(lambda x: my_transform_nor(x)),
-                            #transforms.Lambda(lambda x: my_transform_go(x)),
+                            transforms.Lambda(lambda x: my_transform_go(x)),
                             transforms.Lambda(lambda x: my_transform_tensor(x))
                             ])
 
