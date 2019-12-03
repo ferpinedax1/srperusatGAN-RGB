@@ -78,7 +78,7 @@ class ImageDataset(Dataset):
         #img_hr = self.hr_transform(img)
 
         # Prueba cambio de fuente
-        img_hr = img
+        img_hr = self.img 
 
         return {"lr": img_lr, "hr": img_hr}
 
