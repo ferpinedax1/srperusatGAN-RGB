@@ -6,7 +6,7 @@
 import os
 from torchvision.utils import save_image, make_grid
 from torch.utils.data import DataLoader
-from model_SN_2 import *
+from model_BN import *
 from perusat import *
 import torch.nn as nn
 import torch.nn.functional as F
@@ -178,21 +178,21 @@ for epoch in range(epoch, n_epochs):
 
     # Guarda en tif un resultado por epoca
 
-    load_lr = torch.load("imagen_raw/raw_lr%d" % epoch)
-    load_lr = load_lr[0].cpu().data.numpy()
-    load_lr = load_lr.transpose()
+    #load_lr = torch.load("imagen_raw/raw_lr%d" % epoch)
+    #load_lr = load_lr[0].cpu().data.numpy()
+    #load_lr = load_lr.transpose()
 
-    load_sr = torch.load("imagen_raw/raw_sr%d" % epoch)
-    load_sr = load_sr[0].cpu().data.numpy()
-    load_sr = load_sr.transpose()
+    #load_sr = torch.load("imagen_raw/raw_sr%d" % epoch)
+    #load_sr = load_sr[0].cpu().data.numpy()
+    #load_sr = load_sr.transpose()
 
-    def un_normalize(array):
-        mean = np.array([373.5604, 370.5355, 412.6234])
-        std = np.array([117.6282, 75.4106, 61.8215])
-        array = (array * std) + mean
-        return array
+    #def un_normalize(array):
+    #    mean = np.array([373.5604, 370.5355, 412.6234])
+    #    std = np.array([117.6282, 75.4106, 61.8215])
+    #    array = (array * std) + mean
+    #    return array
 
-    tif_img_lr = un_normalize(load_lr)
-    tif_img_sr = un_normalize(load_sr)
-    tifffile.imsave("imagen_tif/tif_lr_%d.tif" % epoch, tif_img_lr)
-    tifffile.imsave("imagen_tif/tif_sr_%d.tif" % epoch, tif_img_sr)
+    #tif_img_lr = un_normalize(load_lr)
+    #tif_img_sr = un_normalize(load_sr)
+    #tifffile.imsave("imagen_tif/tif_lr_%d.tif" % epoch, tif_img_lr)
+    #tifffile.imsave("imagen_tif/tif_sr_%d.tif" % epoch, tif_img_sr)
