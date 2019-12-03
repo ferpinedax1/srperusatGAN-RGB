@@ -9,15 +9,7 @@ import cv2
 import numpy
 from torchvision import transforms
 
-#Valores de normalizacion - Perusat_v4
-mean = np.array([373.5604, 370.5355, 412.6234])
-std = np.array([117.6282,  75.4106,  61.8215])
 
-mean_tensor = torch.FloatTensor(mean)
-std_tensor = torch.FloatTensor(std)
-
-#Transformaciones lambda - soporte para tif
-#Perusat tamaño fijo de 512x512
 def my_transform_go(x):
     imx = x.transpose((2, 0, 1))
     return imx
@@ -59,7 +51,6 @@ def my_transform_nor3(x):
     nor_image = (x - x.min()) / (x.max()-x.min())
     return nor_image
 
-
 class ImageDataset(Dataset):
     def __init__(self, root, hr_shape):
         hr_height, hr_width = hr_shape
@@ -67,22 +58,22 @@ class ImageDataset(Dataset):
         # Transforms for low resolution images and high resolution images
         self.lr_transform = transforms.Compose([
                             transforms.Lambda(lambda x: my_transform_128(x)),
-                            transforms.Lambda(lambda x: my_transform_nor(x)),
-                            transforms.Lambda(lambda x: my_transform_go(x)),
+                            #transforms.Lambda(lambda x: my_transform_nor(x)),
+                            #transforms.Lambda(lambda x: my_transform_go(x)),
                             transforms.Lambda(lambda x: my_transform_tensor(x))
                             ])
         #Transformacion para obtener una imagen en HR 512x512 - interpolación
         self.hr_transform = transforms.Compose([
                             transforms.Lambda(lambda x: my_transform_512(x)),
-                            transforms.Lambda(lambda x: my_transform_nor(x)),
-                            transforms.Lambda(lambda x: my_transform_go(x)),
+                            #transforms.Lambda(lambda x: my_transform_nor(x)),
+                            #transforms.Lambda(lambda x: my_transform_go(x)),
                             transforms.Lambda(lambda x: my_transform_tensor(x))
                             ])
 
         self.files = sorted(glob.glob(root + "/*.*"))
 
     def __getitem__(self, index):
-        img = tifffile.imread(self.files[index % len(self.files)])
+        img = cv2.imread(self.files[index % len(self.files)])
         img_lr = self.lr_transform(img)
         img_hr = self.hr_transform(img)
 
