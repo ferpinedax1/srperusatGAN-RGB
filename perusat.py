@@ -64,7 +64,7 @@ class ImageDataset(Dataset):
                             ])
         #Transformacion para obtener una imagen en HR 512x512 - interpolación
         self.hr_transform = transforms.Compose([
-                            transforms.Lambda(lambda x: my_transform_512(x)),
+                            #transforms.Lambda(lambda x: my_transform_512(x)),
                             #transforms.Lambda(lambda x: my_transform_nor(x)),
                             transforms.Lambda(lambda x: my_transform_go(x)),
                             transforms.Lambda(lambda x: my_transform_tensor(x))
@@ -75,10 +75,10 @@ class ImageDataset(Dataset):
     def __getitem__(self, index):
         img = cv2.imread(self.files[index % len(self.files)])
         img_lr = self.lr_transform(img)
-        #img_hr = self.hr_transform(img)
+        img_hr = self.hr_transform(img)
 
         # Prueba cambio de fuente
-        img_hr = self.img 
+        #img_hr = self.img
 
         return {"lr": img_lr, "hr": img_hr}
 
