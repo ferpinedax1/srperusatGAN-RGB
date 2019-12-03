@@ -164,6 +164,8 @@ for epoch in range(epoch, n_epochs):
     imgs_inter = nn.functional.interpolate(imgs_source, scale_factor=4, mode='bicubic')
     #imgs_inter = cv2.resize(np.float32(imgs_source), (512, 512), interpolation=cv2.INTER_CUBIC)
 
+    # Guardo una imagen en SR
+    save_image(gen_sr, "imagen_png/png_sr_%d.png" % epoch, normalize=True)
     # Imagen interpolacion vs SR
     gen_sr = make_grid(gen_sr, nrow=1, normalize=True)
     imgs_inter = make_grid(imgs_inter, nrow=1, normalize=True)
