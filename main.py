@@ -78,7 +78,7 @@ Tensor = torch.cuda.FloatTensor
 #path = "/home/fpineda/Documentos/Gdrive/Colab Notebooks/Dataset/perusat_v1/TIFperusat3bandas_lite/"
 
 # GPU enterprise
-path = "/home/fpineda/dataset/perusat_v4/TIFperusat3bandas/"
+path = "/home/fpineda/dataset/perusat_v4/PNGperusat3/"
 #path = "/home/fpineda/dataset/TIFperusat3bandas_lite/"
 
 # GPU oso
