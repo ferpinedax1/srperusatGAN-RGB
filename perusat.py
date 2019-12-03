@@ -75,7 +75,10 @@ class ImageDataset(Dataset):
     def __getitem__(self, index):
         img = cv2.imread(self.files[index % len(self.files)])
         img_lr = self.lr_transform(img)
-        img_hr = self.hr_transform(img)
+        #img_hr = self.hr_transform(img)
+
+        # Prueba cambio de fuente
+        img_hr = img
 
         return {"lr": img_lr, "hr": img_hr}
 
