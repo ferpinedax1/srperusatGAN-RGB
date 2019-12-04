@@ -27,8 +27,8 @@ batch_size = 4
 GPU_use = 1
 
 # Optimizacion
-lr = 0.001
-b1 = 0.9
+lr = 0.0001
+b1 = 0.5
 b2 = 0.999
 
 # Tamaño de la imagen perusat 1
