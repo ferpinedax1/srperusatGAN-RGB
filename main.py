@@ -144,7 +144,7 @@ for epoch in range(epoch, n_epochs):
 
         # Total loss
         #loss_D = (loss_D_real + loss_D_fake) / 2
-        loss_D = 1 - (loss_D_real + loss_D_fake)
+        loss_D = (loss_D_real + loss_D_fake)
 
         loss_D.backward()
         optimizer_D.step()
