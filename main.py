@@ -69,10 +69,10 @@ criterion_GAN = criterion_GAN.cuda()
 criterion_content = criterion_content.cuda()
 
 # Optimizador
-#optimizer_G = torch.optim.Adam(generator.parameters(), lr=lr, betas=(b1, b2))
-#optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=lr, betas=(b1, b2))
-optimizer_G = torch.optim.Adam(generator.parameters())
-optimizer_D = torch.optim.Adam(discriminator.parameters())
+optimizer_G = torch.optim.Adam(generator.parameters(), lr=lr, betas=(b1, b2))
+optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=lr, betas=(b1, b2))
+#optimizer_G = torch.optim.Adam(generator.parameters())
+#optimizer_D = torch.optim.Adam(discriminator.parameters())
 
 
 
