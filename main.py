@@ -126,7 +126,7 @@ for epoch in range(epoch, n_epochs):
         loss_content = criterion_content(gen_features, real_features.detach())
 
         # Total loss
-        loss_G = loss_content + 1e-3 * loss_GAN
+        loss_G = loss_content + (1e-3 * loss_GAN)
 
         loss_G.backward()
         optimizer_G.step()
@@ -143,8 +143,7 @@ for epoch in range(epoch, n_epochs):
         loss_D_fake = criterion_GAN(discriminator(gen_sr.detach()), fake)
 
         # Total loss
-        #loss_D = (loss_D_real + loss_D_fake) / 2
-        loss_D = (loss_D_real + loss_D_fake)
+        loss_D = (loss_D_real + loss_D_fake) / 2
 
         loss_D.backward()
         optimizer_D.step()
