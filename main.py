@@ -68,8 +68,10 @@ criterion_GAN = criterion_GAN.cuda()
 criterion_content = criterion_content.cuda()
 
 # Optimizador
-optimizer_G = torch.optim.Adam(generator.parameters(), lr=lr, betas=(b1, b2))
-optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=lr, betas=(b1, b2))
+#optimizer_G = torch.optim.Adam(generator.parameters(), lr=lr, betas=(b1, b2))
+#optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=lr, betas=(b1, b2))
+optimizer_G = torch.optim.Adam(generator.parameters())
+optimizer_D = torch.optim.Adam(discriminator.parameters())
 
 Tensor = torch.cuda.FloatTensor
 
@@ -166,6 +168,7 @@ for epoch in range(epoch, n_epochs):
 
     # Guardo una imagen en SR
     save_image(gen_sr, "imagen_png/png_sr_%d.png" % epoch, normalize=True)
+
     # Imagen interpolacion vs SR
     gen_sr = make_grid(gen_sr, nrow=1, normalize=True)
     imgs_inter = make_grid(imgs_inter, nrow=1, normalize=True)
