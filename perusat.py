@@ -45,10 +45,6 @@ def my_transform_crop(x, scale=1.0):
     img_cropped = img[int(top_y):int(bottom_y), int(left_x):int(right_x)]
     return img_cropped
 
-
-img = cv2.imread('lena.jpg')
-img_cropped = crop_img(img, 0.75)
-
 def my_transform_512(x):
     res_image = cv2.resize(x, (512, 512), interpolation=cv2.INTER_CUBIC)
     return res_image
