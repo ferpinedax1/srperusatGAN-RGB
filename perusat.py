@@ -28,7 +28,7 @@ def my_transform_resize(x):
     width = int(x.shape[1] * scale_percent / 100)
     height = int(x.shape[0] * scale_percent / 100)
     dim = (width, height)
-    res_image = cv2.resize(img, dim, interpolation=cv2.INTER_CUBIC)
+    res_image = cv2.resize(x, dim, interpolation=cv2.INTER_CUBIC)
     return res_image
 
 # Se redimensiona a 128x128
