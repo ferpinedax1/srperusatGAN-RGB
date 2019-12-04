@@ -37,9 +37,9 @@ def my_transform_128(x):
     return res_image
 
 # Se corta la imagen de acuerdo a la escala
-def my_transform_crop(img, scale=1.0):
-    center_x, center_y = img.shape[1] / 2, img.shape[0] / 2
-    width_scaled, height_scaled = img.shape[1] * scale, img.shape[0] * scale
+def my_transform_crop(x, scale=1.0):
+    center_x, center_y = x.shape[1] / 2, x.shape[0] / 2
+    width_scaled, height_scaled = x.shape[1] * scale, x.shape[0] * scale
     left_x, right_x = center_x - width_scaled / 2, center_x + width_scaled / 2
     top_y, bottom_y = center_y - height_scaled / 2, center_y + height_scaled / 2
     img_cropped = img[int(top_y):int(bottom_y), int(left_x):int(right_x)]
