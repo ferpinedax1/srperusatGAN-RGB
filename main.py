@@ -20,8 +20,8 @@ os.makedirs("imagen_raw", exist_ok=True)
 
 # Configuracion entrenamiento
 epoch = 0
-n_epochs = 50
-batch_size = 4
+n_epochs = 100
+batch_size = 32
 
 # Seleccion de GPU a utilizar, si se cuenta con 1 GPU, valor 0
 GPU_use = 1
@@ -32,8 +32,8 @@ b1 = 0.5
 b2 = 0.999
 
 # Tamaño de la imagen perusat 1
-hr_height = 512
-hr_width = 512
+hr_height = 64#512
+hr_width = 64#512
 
 # Bandas a utilizar
 channel = 3
