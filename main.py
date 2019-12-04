@@ -161,9 +161,13 @@ for epoch in range(epoch, n_epochs):
     #torch.save(imgs_lr, 'imagen_raw/raw_lr%d' % epoch)
     #torch.save(gen_sr, 'imagen_raw/raw_sr%d' % epoch)
 
-    # Guardo imagen original
+    # Guardo imagen lr original
     imgs_source = imgs_lr
     save_image(imgs_source, "imagen_png/png_source_%d.png" % epoch, normalize=True)
+
+    # Guardo imagen hr original
+    imgs_source2 = imgs_hr
+    save_image(imgs_source2, "imagen_png/png_source2_%d.png" % epoch, normalize=True)
 
     # La imagen en lr se le hace interpolacion a 512, y comparar con SR
     imgs_inter = nn.functional.interpolate(imgs_source, scale_factor=4, mode='bicubic')
