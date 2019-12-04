@@ -46,6 +46,7 @@ torch.cuda.set_device(GPU_use)
 cuda = torch.cuda.is_available()
 
 # Imagenes dataset Perusat 512x512
+# no se esta utiliazndo
 hr_shape = (hr_height, hr_width)
 
 # Inicializa generador y discriminador
@@ -68,8 +69,12 @@ criterion_GAN = criterion_GAN.cuda()
 criterion_content = criterion_content.cuda()
 
 # Optimizador
-optimizer_G = torch.optim.Adam(generator.parameters(), lr=lr, betas=(b1, b2))
-optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=lr, betas=(b1, b2))
+#optimizer_G = torch.optim.Adam(generator.parameters(), lr=lr, betas=(b1, b2))
+#optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=lr, betas=(b1, b2))
+optimizer_G = torch.optim.Adam(generator.parameters())
+optimizer_D = torch.optim.Adam(discriminator.parameters())
+
+
 
 Tensor = torch.cuda.FloatTensor
 
@@ -153,8 +158,8 @@ for epoch in range(epoch, n_epochs):
 
 
     # Guardo datos en lr y sr
-    torch.save(imgs_lr, 'imagen_raw/raw_lr%d' % epoch)
-    torch.save(gen_sr, 'imagen_raw/raw_sr%d' % epoch)
+    #torch.save(imgs_lr, 'imagen_raw/raw_lr%d' % epoch)
+    #torch.save(gen_sr, 'imagen_raw/raw_sr%d' % epoch)
 
     # Guardo imagen original
     imgs_source = imgs_lr
