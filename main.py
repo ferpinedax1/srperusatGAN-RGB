@@ -27,8 +27,8 @@ batch_size = 4
 GPU_use = 1
 
 # Optimizacion
-lr = 0.0002
-b1 = 0.5
+lr = 0.001
+b1 = 0.9
 b2 = 0.999
 
 # Tamaño de la imagen perusat 1
@@ -68,10 +68,8 @@ criterion_GAN = criterion_GAN.cuda()
 criterion_content = criterion_content.cuda()
 
 # Optimizador
-#optimizer_G = torch.optim.Adam(generator.parameters(), lr=lr, betas=(b1, b2))
-#optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=lr, betas=(b1, b2))
-optimizer_G = torch.optim.Adam(generator.parameters())
-optimizer_D = torch.optim.Adam(discriminator.parameters())
+optimizer_G = torch.optim.Adam(generator.parameters(), lr=lr, betas=(b1, b2))
+optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=lr, betas=(b1, b2))
 
 Tensor = torch.cuda.FloatTensor
 
