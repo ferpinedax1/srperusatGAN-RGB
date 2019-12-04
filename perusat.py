@@ -42,7 +42,7 @@ def my_transform_crop(x, scale=1.0):
     width_scaled, height_scaled = x.shape[1] * scale, x.shape[0] * scale
     left_x, right_x = center_x - width_scaled / 2, center_x + width_scaled / 2
     top_y, bottom_y = center_y - height_scaled / 2, center_y + height_scaled / 2
-    img_cropped = img[int(top_y):int(bottom_y), int(left_x):int(right_x)]
+    img_cropped = x[int(top_y):int(bottom_y), int(left_x):int(right_x)]
     return img_cropped
 
 def my_transform_512(x):
