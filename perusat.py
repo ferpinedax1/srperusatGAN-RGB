@@ -23,9 +23,31 @@ def my_transform_tensor(x):
     tensor = torch.FloatTensor(x)
     return tensor
 
+def my_transform_resize(x):
+    scale_percent = 25  # percent of original size
+    width = int(x.shape[1] * scale_percent / 100)
+    height = int(x.shape[0] * scale_percent / 100)
+    dim = (width, height)
+    res_image = cv2.resize(img, dim, interpolation=cv2.INTER_CUBIC)
+    return res_image
+
+# Se redimensiona a 128x128
 def my_transform_128(x):
     res_image = cv2.resize(x, (128, 128), interpolation=cv2.INTER_CUBIC)
     return res_image
+
+# Se corta la imagen de acuerdo a la escala
+def my_transform_crop(img, scale=1.0):
+    center_x, center_y = img.shape[1] / 2, img.shape[0] / 2
+    width_scaled, height_scaled = img.shape[1] * scale, img.shape[0] * scale
+    left_x, right_x = center_x - width_scaled / 2, center_x + width_scaled / 2
+    top_y, bottom_y = center_y - height_scaled / 2, center_y + height_scaled / 2
+    img_cropped = img[int(top_y):int(bottom_y), int(left_x):int(right_x)]
+    return img_cropped
+
+
+img = cv2.imread('lena.jpg')
+img_cropped = crop_img(img, 0.75)
 
 def my_transform_512(x):
     res_image = cv2.resize(x, (512, 512), interpolation=cv2.INTER_CUBIC)
@@ -57,13 +79,16 @@ class ImageDataset(Dataset):
         #Transformacion para obtener una imagen en LR 128x128 - interpolación
         # Transforms for low resolution images and high resolution images
         self.lr_transform = transforms.Compose([
-                            transforms.Lambda(lambda x: my_transform_128(x)),
+                            transforms.Lambda(lambda x: my_transform_crop(x, 0.25)),
+                            transforms.Lambda(lambda x: my_transform_resize(x)),
+                            #transforms.Lambda(lambda x: my_transform_128(x)),
                             #transforms.Lambda(lambda x: my_transform_nor(x)),
                             transforms.Lambda(lambda x: my_transform_go(x)),
                             transforms.Lambda(lambda x: my_transform_tensor(x))
                             ])
         #Transformacion para obtener una imagen en HR 512x512 - interpolación
         self.hr_transform = transforms.Compose([
+                            transforms.Lambda(lambda x: my_transform_crop(x, 0.25)),
                             #transforms.Lambda(lambda x: my_transform_512(x)),
                             #transforms.Lambda(lambda x: my_transform_nor(x)),
                             transforms.Lambda(lambda x: my_transform_go(x)),

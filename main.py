@@ -27,7 +27,7 @@ batch_size = 4
 GPU_use = 1
 
 # Optimizacion
-lr = 0.0001
+lr = 0.0002
 b1 = 0.5
 b2 = 0.999
 
