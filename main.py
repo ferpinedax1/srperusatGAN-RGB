@@ -6,7 +6,7 @@
 import os
 from torchvision.utils import save_image, make_grid
 from torch.utils.data import DataLoader
-from model_SN_2 import *
+from model_BN import *
 from perusat import *
 import torch.nn as nn
 import torch.nn.functional as F
@@ -20,20 +20,20 @@ os.makedirs("imagen_raw", exist_ok=True)
 
 # Configuracion entrenamiento
 epoch = 0
-n_epochs = 50
-batch_size = 4
+n_epochs = 100
+batch_size = 32
 
 # Seleccion de GPU a utilizar, si se cuenta con 1 GPU, valor 0
 GPU_use = 1
 
 # Optimizacion
-lr = 0.0002
-b1 = 0.5
+lr = 0.001#0.0002
+b1 = 0.9#0.5
 b2 = 0.999
 
 # Tamaño de la imagen perusat 1
-hr_height = 512
-hr_width = 512
+hr_height = 64#512
+hr_width = 64#512
 
 # Bandas a utilizar
 channel = 3
@@ -46,6 +46,7 @@ torch.cuda.set_device(GPU_use)
 cuda = torch.cuda.is_available()
 
 # Imagenes dataset Perusat 512x512
+# no se esta utiliazndo
 hr_shape = (hr_height, hr_width)
 
 # Inicializa generador y discriminador
@@ -70,6 +71,10 @@ criterion_content = criterion_content.cuda()
 # Optimizador
 optimizer_G = torch.optim.Adam(generator.parameters(), lr=lr, betas=(b1, b2))
 optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=lr, betas=(b1, b2))
+#optimizer_G = torch.optim.Adam(generator.parameters())
+#optimizer_D = torch.optim.Adam(discriminator.parameters())
+
+
 
 Tensor = torch.cuda.FloatTensor
 
@@ -78,7 +83,7 @@ Tensor = torch.cuda.FloatTensor
 #path = "/home/fpineda/Documentos/Gdrive/Colab Notebooks/Dataset/perusat_v1/TIFperusat3bandas_lite/"
 
 # GPU enterprise
-path = "/home/fpineda/dataset/perusat_v4/TIFperusat3bandas/"
+path = "/home/fpineda/dataset/perusat_v4/PNGperusat/"
 #path = "/home/fpineda/dataset/TIFperusat3bandas_lite/"
 
 # GPU oso
@@ -121,7 +126,7 @@ for epoch in range(epoch, n_epochs):
         loss_content = criterion_content(gen_features, real_features.detach())
 
         # Total loss
-        loss_G = loss_content + 1e-3 * loss_GAN
+        loss_G = loss_content + (1e-3 * loss_GAN)
 
         loss_G.backward()
         optimizer_G.step()
@@ -153,16 +158,23 @@ for epoch in range(epoch, n_epochs):
 
 
     # Guardo datos en lr y sr
-    torch.save(imgs_lr, 'imagen_raw/raw_lr%d' % epoch)
-    torch.save(gen_sr, 'imagen_raw/raw_sr%d' % epoch)
+    #torch.save(imgs_lr, 'imagen_raw/raw_lr%d' % epoch)
+    #torch.save(gen_sr, 'imagen_raw/raw_sr%d' % epoch)
 
-    # Guardo imagen original
+    # Guardo imagen lr original
     imgs_source = imgs_lr
     save_image(imgs_source, "imagen_png/png_source_%d.png" % epoch, normalize=True)
+
+    # Guardo imagen hr original
+    imgs_source2 = imgs_hr
+    save_image(imgs_source2, "imagen_png/png_source2_%d.png" % epoch, normalize=True)
 
     # La imagen en lr se le hace interpolacion a 512, y comparar con SR
     imgs_inter = nn.functional.interpolate(imgs_source, scale_factor=4, mode='bicubic')
     #imgs_inter = cv2.resize(np.float32(imgs_source), (512, 512), interpolation=cv2.INTER_CUBIC)
+
+    # Guardo una imagen en SR
+    save_image(gen_sr, "imagen_png/png_sr_%d.png" % epoch, normalize=True)
 
     # Imagen interpolacion vs SR
     gen_sr = make_grid(gen_sr, nrow=1, normalize=True)
@@ -178,21 +190,21 @@ for epoch in range(epoch, n_epochs):
 
     # Guarda en tif un resultado por epoca
 
-    load_lr = torch.load("imagen_raw/raw_lr%d" % epoch)
-    load_lr = load_lr[0].cpu().data.numpy()
-    load_lr = load_lr.transpose()
+    #load_lr = torch.load("imagen_raw/raw_lr%d" % epoch)
+    #load_lr = load_lr[0].cpu().data.numpy()
+    #load_lr = load_lr.transpose()
 
-    load_sr = torch.load("imagen_raw/raw_sr%d" % epoch)
-    load_sr = load_sr[0].cpu().data.numpy()
-    load_sr = load_sr.transpose()
+    #load_sr = torch.load("imagen_raw/raw_sr%d" % epoch)
+    #load_sr = load_sr[0].cpu().data.numpy()
+    #load_sr = load_sr.transpose()
 
-    def un_normalize(array):
-        mean = np.array([373.5604, 370.5355, 412.6234])
-        std = np.array([117.6282, 75.4106, 61.8215])
-        array = (array * std) + mean
-        return array
+    #def un_normalize(array):
+    #    mean = np.array([373.5604, 370.5355, 412.6234])
+    #    std = np.array([117.6282, 75.4106, 61.8215])
+    #    array = (array * std) + mean
+    #    return array
 
-    tif_img_lr = un_normalize(load_lr)
-    tif_img_sr = un_normalize(load_sr)
-    tifffile.imsave("imagen_tif/tif_lr_%d.tif" % epoch, tif_img_lr)
-    tifffile.imsave("imagen_tif/tif_sr_%d.tif" % epoch, tif_img_sr)
+    #tif_img_lr = un_normalize(load_lr)
+    #tif_img_sr = un_normalize(load_sr)
+    #tifffile.imsave("imagen_tif/tif_lr_%d.tif" % epoch, tif_img_lr)
+    #tifffile.imsave("imagen_tif/tif_sr_%d.tif" % epoch, tif_img_sr)

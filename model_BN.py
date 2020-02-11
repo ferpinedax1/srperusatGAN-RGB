@@ -3,15 +3,15 @@
 
 import math
 import torch
-from torchvision.models import vgg19
+from torchvision.models import vgg16
 import torch.nn.functional as F
 from torch import nn
 
 class FeatureExtractor(nn.Module):
     def __init__(self):
         super(FeatureExtractor, self).__init__()
-        vgg19_model = vgg19(pretrained=True)
-        self.feature_extractor = nn.Sequential(*list(vgg19_model.features.children())[:18])
+        vgg19_model = vgg16(pretrained=True)
+        self.feature_extractor = nn.Sequential(*list(vgg19_model.features.children())[:31])
 
     def forward(self, img):
         return self.feature_extractor(img)
